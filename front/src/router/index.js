@@ -1,25 +1,57 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import AuthLayout from "@/layout/AuthLayout.vue";
+import DefaultLayout from "@/layout/DefaultLayout.vue";
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/auth",
+    name: "auth",
+    exact: true,
+    component: AuthLayout,
+    children: [
+      {
+        path: "login",
+        name: "login",
+        component: () => import("../pages/login.vue"),
+      },
+      {
+        path: "signup",
+        name: "signup",
+
+        component: () => import("../pages/signUp.vue"),
+      },
+    ],
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+    path: "/",
+    exact: true,
+    componenent: DefaultLayout,
+    children: [
+      {
+        path: "",
+        name: "home",
+        component: () => import("../pages/Home.vue"),
+      },
+    ],
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "notfound",
+    component: () => import("../pages/NotFound.vue"),
+  },
+];
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes
-})
+  history: createWebHistory(),
+  routes,
+});
 
-export default router
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requireAuth && !isAuthenticated()) {
+//     next("/login");
+//   } else {
+//     next();
+//   }
+// });
+
+export default router;

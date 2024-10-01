@@ -1,30 +1,24 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <!-- <login-page /> -->
+    <!-- <sign-up /> -->
+    <default-layout />
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import DefaultLayout from "./layout/DefaultLayout.vue";
 
-nav {
-  padding: 30px;
-}
+// import Home from "./pages/Home.vue";
+// import loginPage from "./pages/login.vue";
+// import SignUp from "./pages/signUp.vue";
+export default {
+  components: {
+    DefaultLayout,
+    // loginPage,
+    // SignUp,
+  },
+};
+</script>
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<style scoped></style>
