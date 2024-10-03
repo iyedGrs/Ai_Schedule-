@@ -15,7 +15,7 @@
             :href="item.href"
             class="text-sm text-gray-500 hover:text-indigo-600 cursor-pointer"
             :to="item.path"
-            active-class=".router-link-active"
+            :exact="item.name === 'Home'"
           >
             {{ item.name }}
           </router-link>
@@ -65,7 +65,7 @@ watch(
 </script>
 
 <style scoped>
-.router-link-active {
-  color: blue;
+.exact-active {
+  color: #6366f1;
 }
 </style>
