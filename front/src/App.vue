@@ -1,24 +1,11 @@
 <template>
   <div>
-    <!-- <login-page /> -->
-    <!-- <sign-up /> -->
-    <default-layout />
+    <router-view />
   </div>
 </template>
 
 <script>
-import DefaultLayout from "./layout/DefaultLayout.vue";
-
-// import Home from "./pages/Home.vue";
-// import loginPage from "./pages/login.vue";
-// import SignUp from "./pages/signUp.vue";
-export default {
-  components: {
-    DefaultLayout,
-    // loginPage,
-    // SignUp,
-  },
-};
+export default {};
 </script>
 
 <style scoped></style>
