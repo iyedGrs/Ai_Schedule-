@@ -8,7 +8,11 @@
         >
           <MenuIcon class="h-6 w-6" />
         </button>
-        <div class="flex items-center space-x-4">
+        <div
+          class="flex items-center space-x-4"
+          key=""
+          v-show="currentItemName !== 'schedules'"
+        >
           <router-link
             v-for="item in navbarItems"
             :key="item.name"
@@ -19,6 +23,14 @@
           >
             {{ item.name }}
           </router-link>
+        </div>
+        <div class="text-gray-500 text-sm">
+          {{
+            currentItemName !== "form"
+              ? currentItemName.charAt(0).toUpperCase() +
+                currentItemName.slice(1)
+              : ""
+          }}
         </div>
         <div class="flex items-center">
           <button class="text-sm text-gray-500 hover:text-indigo-600">
@@ -37,11 +49,10 @@
 import { UserIcon, BellIcon, MenuIcon } from "lucide-vue-next";
 
 import { defineEmits, ref, defineProps, watch } from "vue";
+import { useRoute } from "vue-router";
 const navbarItems = [
   { name: "Home", path: "/" },
-  { name: "Tasks", path: "/tasks" },
-  { name: "Projects", path: "/projects" },
-  { name: "Team", path: "/teams" },
+  { name: "Form", path: "/form" },
 ];
 const emit = defineEmits(["toggle-side"]);
 const toggleSideMenu = () => {
@@ -54,8 +65,20 @@ const props = defineProps({
   },
 });
 const isSideMenuOpen = ref(props.isSideMenuOpen);
-
-console.log("hedha el sidemenu mel nav bar", props.isSideMenuOpen);
+const route = useRoute();
+const currentItemName = ref("");
+watch(
+  () => route.path,
+  (newVal) => {
+    console.log("this is the path", newVal);
+    if (newVal.length > 0) {
+      const path = newVal.split("/")[1];
+      console.log("this is the path", path);
+      currentItemName.value = path;
+    }
+  },
+  { immediate: true }
+);
 watch(
   () => props.isSideMenuOpen,
   (newVal) => {

@@ -3,11 +3,10 @@ import { createRouter, createWebHistory } from "vue-router";
 import login from "@/pages/login.vue";
 import signUp from "@/pages/signUp.vue";
 import DefaultLayout from "@/layout/DefaultLayout.vue";
-import Home from "@/pages/Home.vue";
 import Tasks from "@/pages/Tasks.vue";
-import Dashboard from "@/pages/Dashboard.vue";
-import Projects from "@/pages/Projects.vue";
-
+import userInfoForm from "@/pages/userInfoForm.vue";
+import LandingPage from "@/pages/LandingPage.vue";
+import SchedulesAi from "@/pages/SchedulesAi.vue";
 const routes = [
   {
     path: "/",
@@ -16,7 +15,7 @@ const routes = [
       {
         path: "",
         name: "Home",
-        component: Home,
+        component: LandingPage,
       },
       {
         path: "/tasks",
@@ -24,14 +23,14 @@ const routes = [
         component: Tasks,
       },
       {
-        path: "/dashboard",
-        name: "Dashboard",
-        component: Dashboard,
+        path: "/form",
+        name: "Form",
+        component: userInfoForm,
       },
       {
-        path: "/projects",
-        name: "Projects",
-        component: Projects,
+        path: "/schedules",
+        name: "Schedules",
+        component: SchedulesAi,
       },
     ],
   },
