@@ -1,6 +1,5 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from "vue-router";
-import login from "@/pages/login.vue";
 import signUp from "@/pages/signUp.vue";
 import DefaultLayout from "@/layout/DefaultLayout.vue";
 import Tasks from "@/pages/Tasks.vue";
@@ -8,6 +7,7 @@ import userInfoForm from "@/pages/userInfoForm.vue";
 import LandingPage from "@/pages/LandingPage.vue";
 import SchedulesAi from "@/pages/SchedulesAi.vue";
 import PricingPage from "@/pages/PricingPage.vue";
+import LoginPage from "@/pages/LoginPage.vue";
 const routes = [
   {
     path: "/",
@@ -43,7 +43,7 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: login,
+    component: LoginPage,
     // No layout specified; it will render without any layout
   },
   {

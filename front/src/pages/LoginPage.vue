@@ -95,12 +95,37 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "login-page",
-};
-</script>
+<script setup>
+import { ref } from 'vue'
+import { LockClosedIcon, LoaderIcon } from 'lucide-vue-next'
+import axios from 'axios'
 
-<style>
-/* Any additional styles can be added here if needed */
-</style>
+const email = ref('')
+const password = ref('')
+const rememberMe = ref(false)
+const isLoading = ref(false)
+
+const handleSubmit = async () => {
+  isLoading.value = true
+  try {
+    // First, get the CSRF cookie
+    await axios.get('http://localhost:8000/sanctum/csrf-cookie')
+
+    // Then, make the login request
+    const response = await axios.post('http://localhost:8000/login', {
+      email: email.value,
+      password: password.value,
+    }, {
+      withCredentials: true,
+    })
+
+    console.log('Login successful:', response.data)
+    // Handle successful login here (e.g., store token, redirect)
+  } catch (error) {
+    console.error('Login failed:', error.response ? error.response.data : error.message)
+    // Handle login error here (e.g., show error message)
+  } finally {
+    isLoading.value = false
+  }
+}
+</script>
