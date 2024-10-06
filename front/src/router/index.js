@@ -7,6 +7,7 @@ import Tasks from "@/pages/Tasks.vue";
 import userInfoForm from "@/pages/userInfoForm.vue";
 import LandingPage from "@/pages/LandingPage.vue";
 import SchedulesAi from "@/pages/SchedulesAi.vue";
+import PricingPage from "@/pages/PricingPage.vue";
 const routes = [
   {
     path: "/",
@@ -31,6 +32,11 @@ const routes = [
         path: "/schedules",
         name: "Schedules",
         component: SchedulesAi,
+      },
+      {
+        path: "/pricing",
+        name: "pricing",
+        component: PricingPage,
       },
     ],
   },
