@@ -20,13 +20,19 @@
         v-for="item in menuItems"
         :key="item.name"
         :href="item.href"
-        class="block py-2.5 px-4 rounded transition duration-200 hover:bg-indigo-800"
+        class="block py-2.5 my-4 px-4 rounded transition duration-200 hover:bg-indigo-800 cursor-pointer"
         :to="item.path"
       >
         <component :is="item.icon" class="h-5 w-5 inline-block mr-2" />
         {{ item.name }}
       </router-link>
     </nav>
+    <div class="absolute bottom-2 right-2">
+      <p class="flex gap-1 items-center cursor-pointer">
+        <LogOutIcon />
+        Log Out
+      </p>
+    </div>
   </aside>
 </template>
 
@@ -39,13 +45,14 @@ import {
   HomeIcon,
   UserIcon,
   XIcon,
+  LogOutIcon,
 } from "lucide-vue-next";
 
 const emit = defineEmits(["toggle-side"]);
 
 const menuItems = [
   { name: "Dashboard", path: "/dashboard", icon: HomeIcon },
-  { name: "Schedule", path: "/schedule", icon: CalendarIcon },
+  { name: "Schedules", path: "/schedules", icon: CalendarIcon },
   { name: "Analytics", path: "/analytics", icon: ChartBarIcon },
   { name: "Profile", path: "/profile", icon: UserIcon },
   { name: "Settings", path: "/settings", icon: CogIcon },
@@ -87,7 +94,7 @@ watch(
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-.router-link-active {
+.exact-active {
   background: #3730a3;
 }
 </style>

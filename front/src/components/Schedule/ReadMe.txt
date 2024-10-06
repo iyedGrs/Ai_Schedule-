@@ -1,0 +1,4 @@
+-we are arguing about : 
+    -if the modal should have a pdf loaded / an image 
+    -the problem is how to extract data to describe the outer badge !! 
+    -with every schedule generated from AI we will send the Question and answers data using Pinia
