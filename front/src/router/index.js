@@ -47,7 +47,7 @@ const routes = [
     // No layout specified; it will render without any layout
   },
   {
-    path: "/signup",
+    path: "/register",
     name: "SignUp",
     component: signUp,
     // No layout specified; it will render without any layout

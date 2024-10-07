@@ -125,9 +125,11 @@
   </div>
 </template>
 
-<!-- <script setup>
+<script setup>
 import { ref, computed } from "vue";
 import { UserPlusIcon, LoaderIcon } from "lucide-vue-next";
+import Cookies from 'js-cookie';
+import axios from "axios";
 
 const name = ref("");
 const email = ref("");
@@ -135,7 +137,7 @@ const password = ref("");
 const confirmPassword = ref("");
 const agreeTerms = ref(false);
 const isLoading = ref(false);
-
+const csrfToken = Cookies.get("XSRF-TOKEN");
 const isFormValid = computed(() => {
   return (
     name.value.trim() !== "" &&
@@ -150,18 +152,33 @@ const handleSubmit = async () => {
   if (!isFormValid.value) return;
 
   isLoading.value = true;
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  // Here you would typically make an API call to create the user account
-  console.log("Creating account with:", {
-    name: name.value,
-    email: email.value,
-    password: password.value,
-  });
-  isLoading.value = false;
-  // Handle successful account creation (e.g., redirect to dashboard or show success message)
+  // register API call
+  try {
+    await axios.get('http://localhost:8000/sanctum/csrf-cookie',{withCredentials:true});
+    const response = await axios.post('http://localhost:8000/register',{
+      name : name.value,
+      email :email.value,
+      password : password.value,
+      password_confirmation : confirmPassword.value
+    },{
+      headers:{
+        'X-XSRF-TOKEN':csrfToken
+      },
+      withCredentials : true
+    }
+  )
+  console.log('Register successful:', response.data)
+  console.log(response.status);  
+  } catch (error) {
+    
+    console.error('Register failed:', error.response ? error.response.data : error.message)
+    // Handle login error here (e.g., show error message)
+  }finally{
+    isLoading.value = false;
+  }
+  
 };
-</script> -->
+</script>
 
 <script>
 export default {
