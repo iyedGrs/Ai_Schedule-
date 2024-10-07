@@ -97,35 +97,19 @@
 
 <script setup>
 import { ref } from 'vue'
-import { LockClosedIcon, LoaderIcon } from 'lucide-vue-next'
-import axios from 'axios'
+import { useAuthStore } from '@/store/auth';
 
 const email = ref('')
 const password = ref('')
 const rememberMe = ref(false)
 const isLoading = ref(false)
+const authStore = useAuthStore()
 
 const handleSubmit = async () => {
-  isLoading.value = true
   try {
-    // First, get the CSRF cookie
-    await axios.get('http://localhost:8000/sanctum/csrf-cookie')
-
-    // Then, make the login request
-    const response = await axios.post('http://localhost:8000/login', {
-      email: email.value,
-      password: password.value,
-    }, {
-      withCredentials: true,
-    })
-
-    console.log('Login successful:', response.data)
-    // Handle successful login here (e.g., store token, redirect)
+    await authStore.login(email.value, password.value)
   } catch (error) {
-    console.error('Login failed:', error.response ? error.response.data : error.message)
-    // Handle login error here (e.g., show error message)
-  } finally {
-    isLoading.value = false
+    console.error('Error during login:', error)
   }
 }
 </script>

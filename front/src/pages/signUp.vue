@@ -127,9 +127,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { UserPlusIcon, LoaderIcon } from "lucide-vue-next";
-import Cookies from 'js-cookie';
-import axios from "axios";
+import { useAuthStore } from '@/store/auth';
 
 const name = ref("");
 const email = ref("");
@@ -137,7 +135,7 @@ const password = ref("");
 const confirmPassword = ref("");
 const agreeTerms = ref(false);
 const isLoading = ref(false);
-const csrfToken = Cookies.get("XSRF-TOKEN");
+const authStore = useAuthStore();
 const isFormValid = computed(() => {
   return (
     name.value.trim() !== "" &&
@@ -149,35 +147,14 @@ const isFormValid = computed(() => {
 });
 
 const handleSubmit = async () => {
-  if (!isFormValid.value) return;
-
-  isLoading.value = true;
-  // register API call
   try {
-    await axios.get('http://localhost:8000/sanctum/csrf-cookie',{withCredentials:true});
-    const response = await axios.post('http://localhost:8000/register',{
-      name : name.value,
-      email :email.value,
-      password : password.value,
-      password_confirmation : confirmPassword.value
-    },{
-      headers:{
-        'X-XSRF-TOKEN':csrfToken
-      },
-      withCredentials : true
-    }
-  )
-  console.log('Register successful:', response.data)
-  console.log(response.status);  
+    const result = await authStore.register(name.value, email.value, password.value, confirmPassword.value);
+    console.log('Registration successful:', result);
+
   } catch (error) {
-    
-    console.error('Register failed:', error.response ? error.response.data : error.message)
-    // Handle login error here (e.g., show error message)
-  }finally{
-    isLoading.value = false;
+    console.error('Error during registration:', error);
   }
-  
-};
+}
 </script>
 
 <script>

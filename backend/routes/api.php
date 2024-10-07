@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 // Login route
 Route::post('/login', function (Request $request) {
     $credentials = $request->validate([
