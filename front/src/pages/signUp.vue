@@ -104,6 +104,7 @@
             type="submit"
             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             :disabled="isLoading || !isFormValid"
+  
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <UserPlusIcon
@@ -126,16 +127,21 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed ,inject} from "vue";
 import { useAuthStore } from '@/store/auth';
+import { useRouter } from "vue-router";
 
+const toast = inject('toast')
 const name = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const agreeTerms = ref(false);
-const isLoading = ref(false);
 const authStore = useAuthStore();
+const isLoading = computed(() => authStore.isLoading)
+const errorMessage = computed(() => authStore.errorMessage)
+const router = useRouter();
+
 const isFormValid = computed(() => {
   return (
     name.value.trim() !== "" &&
@@ -146,13 +152,21 @@ const isFormValid = computed(() => {
   );
 });
 
+const notifySuccess=()=>{
+  toast.addToast({message:'Register Successful',type:'success',duration:3000})
+}
+
+const notifyError = (errorMessage)=>{
+  toast.addToast({message:errorMessage ,type:'error',duration:3000})
+ }
+
 const handleSubmit = async () => {
   try {
-    const result = await authStore.register(name.value, email.value, password.value, confirmPassword.value);
-    console.log('Registration successful:', result);
-
+    await authStore.register(name.value, email.value, password.value, confirmPassword.value);
+    notifySuccess() 
+    router.push('/login');
   } catch (error) {
-    console.error('Error during registration:', error);
+    notifyError(errorMessage);
   }
 }
 </script>

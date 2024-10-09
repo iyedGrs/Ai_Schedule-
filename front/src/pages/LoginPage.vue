@@ -96,20 +96,38 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,computed,inject } from 'vue'
 import { useAuthStore } from '@/store/auth';
+import { useRouter } from 'vue-router';
+
 
 const email = ref('')
 const password = ref('')
 const rememberMe = ref(false)
-const isLoading = ref(false)
 const authStore = useAuthStore()
+const isLoading = computed(() => authStore.isLoading)
+const errorMessage = computed(() => authStore.errorMessage)
+const toast = inject('toast')
+const router = useRouter();
+
+
+const notifySuccess=()=>{
+  toast.addToast({message:'Login Successful',type:'success',duration:3000})
+}
+
+ const notifyError = (errorMessage)=>{
+  toast.addToast({message:errorMessage ,type:'error',duration:3000})
+ }
 
 const handleSubmit = async () => {
   try {
+
     await authStore.login(email.value, password.value)
+    notifySuccess()
+    router.push('/');
+   
   } catch (error) {
-    console.error('Error during login:', error)
+    notifyError(errorMessage.value ||"Login Failed !");
   }
 }
 </script>

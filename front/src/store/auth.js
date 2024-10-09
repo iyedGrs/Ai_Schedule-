@@ -6,24 +6,23 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     token: null,
     isLoading: false,
-    errorMessage: ''
+    errorMessage: null
   }),
   actions: {
     async login(email, password) {
       this.isLoading = true
-      this.errorMessage = ''
       try {
-        // Perform the login action
         const response = await loginAction(email, password)
 
-        // Set user and token in the store
         this.user = response.user; 
         this.token = response.token; 
 
         return response
       } catch (error) {
+        console.log("there is a store catch error ");
         this.errorMessage = error.response ? error.response.data.message : 'Login failed.'
-        console.error('Login error:', this.errorMessage)
+       
+        console.error('Login error:', this.errorMessage) // ici
         throw error
       } finally {
         this.isLoading = false
@@ -34,10 +33,8 @@ export const useAuthStore = defineStore('auth', {
       this.isLoading = true
       this.errorMessage = ''
       try {
-        // Perform the register action
         const response = await registerAction(name, email, password, confirmPassword)
 
-        // Set user and token in the store
         this.user = response.user; 
         this.token = response.token; 
 

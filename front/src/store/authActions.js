@@ -6,10 +6,8 @@ const isLoading = ref(false)
 export const login = async (email, password) => {
   isLoading.value = true
   try {
-    // First, get the CSRF cookie
     await axios.get('http://localhost:8000/sanctum/csrf-cookie')
 
-    // Then, make the login request
     const response = await axios.post('http://localhost:8000/login', {
       email,
       password,
@@ -18,7 +16,6 @@ export const login = async (email, password) => {
     })
 
     console.log('Login successful:', response.data)
-    // Return the response so that the component can handle it
     return response.data
   } catch (error) {
     console.error('Login failed:', error.response ? error.response.data : error.message)
@@ -31,7 +28,6 @@ export const login = async (email, password) => {
 export const register = async (name, email, password, confirmPassword) => {
     isLoading.value = true
     try {
-      // First, get the CSRF cookie
       await axios.get('http://localhost:8000/sanctum/csrf-cookie', { withCredentials: true })
   
       const response = await axios.post('http://localhost:8000/register', {
