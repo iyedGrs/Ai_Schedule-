@@ -36,8 +36,11 @@
           <button class="text-sm text-gray-500 hover:text-indigo-600">
             <BellIcon class="h-5 w-5" />
           </button>
-          <button class="ml-4 text-sm text-gray-500 hover:text-indigo-600">
+          <button class=" ml-4 text-sm text-gray-500 hover:text-indigo-600 flex">
             <UserIcon class="h-5 w-5" />
+            <div v-if=" authStore!==null " >
+              {{ userName }}
+            </div>
           </button>
         </div>
       </div>
@@ -46,10 +49,15 @@
 </template>
 
 <script setup>
-import { UserIcon, BellIcon, MenuIcon } from "lucide-vue-next";
-
-import { defineEmits, ref, defineProps, watch } from "vue";
+import { defineEmits, ref, defineProps, watch,computed } from "vue";
 import { useRoute } from "vue-router";
+import { useAuthStore } from "@/store/auth";
+import { MenuIcon, BellIcon, UserIcon } from "@heroicons/vue/outline";
+
+const authStore = useAuthStore();
+const userName = computed(() => authStore.user?.name);
+console.log(userName.value);
+
 const navbarItems = [
   { name: "Home", path: "/" },
   { name: "Form", path: "/form" },

@@ -99,17 +99,15 @@
 import { ref,computed,inject } from 'vue'
 import { useAuthStore } from '@/store/auth';
 import { useRouter } from 'vue-router';
-
-
 const email = ref('')
 const password = ref('')
 const rememberMe = ref(false)
 const authStore = useAuthStore()
 const isLoading = computed(() => authStore.isLoading)
 const errorMessage = computed(() => authStore.errorMessage)
+// const token = computed(() => authStore.token)
 const toast = inject('toast')
 const router = useRouter();
-
 
 const notifySuccess=()=>{
   toast.addToast({message:'Login Successful',type:'success',duration:3000})
@@ -122,8 +120,11 @@ const notifySuccess=()=>{
 const handleSubmit = async () => {
   try {
 
-    await authStore.login(email.value, password.value)
+    const { token }= await authStore.login(email.value, password.value)
+    console.log("this is user and token from login",user,token);
     notifySuccess()
+    // console.log("hedha el token ",token)
+    await authStore.getAuthUser(token)
     router.push('/');
    
   } catch (error) {
