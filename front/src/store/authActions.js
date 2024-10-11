@@ -16,7 +16,7 @@ export const test = async () => {
     isLoading.value = false
   }
 }
-export const getAuthUser = async (token) => { 
+/*export const getAuthUser = async (token) => { 
   isLoading.value = true
   try {
     const response = await axios.get('http://localhost:8000/api/user', {
@@ -32,7 +32,7 @@ export const getAuthUser = async (token) => {
   } finally {
     isLoading.value = false
   }
-}
+}*/
 
 
 export const login = async (email, password) => {
@@ -40,13 +40,14 @@ export const login = async (email, password) => {
   try {
     await axios.get('http://localhost:8000/sanctum/csrf-cookie')
 
-    const response = await axios.post('http://localhost:8000/api/login', {
+    const response = await axios.post('http://localhost:8000/login', {
       email,
       password,
     }, {
       withCredentials: true,
     })
-   
+    console.log("response data  = " , response.data);
+    
     return response.data
   } catch (error) {
     console.error('Login failed:', error.response ? error.response.data : error.message)
@@ -63,7 +64,7 @@ export const register = async (name, email, password, confirmPassword) => {
     try {
       await axios.get('http://localhost:8000/sanctum/csrf-cookie', { withCredentials: true })
   
-      const response = await axios.post('http://localhost:8000/api/register', {
+      const response = await axios.post('http://localhost:8000/register', {
         name,
         email,
         password,
@@ -83,7 +84,7 @@ export const register = async (name, email, password, confirmPassword) => {
   export const logout = async () => {
   isLoading.value = true
   try {
-    await axios.post('http://localhost:8000/api/logout', {}, { withCredentials: true })
+    await axios.post('http://localhost:8000/logout', {}, { withCredentials: true })
     console.log('Logout successful')
   } catch (error) {
     console.error('Logout failed:', error.response ? error.response.data : error.message)

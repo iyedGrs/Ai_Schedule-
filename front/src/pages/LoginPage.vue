@@ -121,7 +121,7 @@ const handleSubmit = async () => {
   try {
 
     const { token }= await authStore.login(email.value, password.value)
-    console.log("this is user and token from login",user,token);
+    console.log("this is user and token from login",token);
     notifySuccess()
     // console.log("hedha el token ",token)
     await authStore.getAuthUser(token)

@@ -8,6 +8,8 @@ import LandingPage from "@/pages/LandingPage.vue";
 import SchedulesAi from "@/pages/SchedulesAi.vue";
 import PricingPage from "@/pages/PricingPage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
+import EmailVerification from "@/pages/EmailVerification.vue";
+import PasswordReset from "@/pages/PasswordReset.vue";
 const routes = [
   {
     path: "/",
@@ -51,6 +53,16 @@ const routes = [
     name: "SignUp",
     component: signUp,
     // No layout specified; it will render without any layout
+  },
+  {
+    path: '/email/verify',
+    name: 'EmailVerification',
+    component: EmailVerification
+  },
+  {
+    path: '/password/reset',
+    name: 'PasswordReset',
+    component: PasswordReset
   },
   // Optionally, add a catch-all route for 404 Not Found
   {
